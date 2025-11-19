@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 6.0.0-dev+20250914.f72491a1c0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 19, 2025 at 10:48 AM
--- Server version: 11.0.0-MariaDB-log
--- PHP Version: 8.4.13
+-- Waktu pembuatan: 19 Nov 2025 pada 16.06
+-- Versi server: 11.3.2-MariaDB-log
+-- Versi PHP: 8.2.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `asesmen`
+-- Struktur dari tabel `asesmen`
 --
 
 CREATE TABLE `asesmen` (
@@ -34,10 +34,17 @@ CREATE TABLE `asesmen` (
   `keluhan_tambahan` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
+--
+-- Dumping data untuk tabel `asesmen`
+--
+
+INSERT INTO `asesmen` (`id`, `kunjunganid`, `keluhan_utama`, `keluhan_tambahan`) VALUES
+(2, 2, 'aa', 'aa');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `group`
+-- Struktur dari tabel `group`
 --
 
 CREATE TABLE `group` (
@@ -52,16 +59,18 @@ CREATE TABLE `group` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `group`
+-- Dumping data untuk tabel `group`
 --
 
 INSERT INTO `group` (`id`, `name`, `notes`, `isactive`, `created_by`, `created_at`, `updated_by`, `updated_at`) VALUES
-(1, 'Administrator', 'Administrator dapat mengakses seluruh akses (all control)', 1, NULL, NULL, NULL, NULL);
+(1, 'Superadmin', 'Administrator dapat mengakses seluruh akses (all control)', 1, NULL, NULL, 1, '2025-11-19 22:53:56'),
+(2, 'Admisi', '', 1, 1, '2025-11-19 22:46:10', 1, '2025-11-19 22:54:02'),
+(3, 'Perawat', '', 1, 1, '2025-11-19 22:46:17', 1, '2025-11-19 22:54:10');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `group_role`
+-- Struktur dari tabel `group_role`
 --
 
 CREATE TABLE `group_role` (
@@ -71,17 +80,33 @@ CREATE TABLE `group_role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `group_role`
+-- Dumping data untuk tabel `group_role`
 --
 
 INSERT INTO `group_role` (`id`, `group_id`, `role_id`) VALUES
 (1, 1, 1),
-(2, 1, 2);
+(2, 1, 2),
+(3, 1, 3),
+(4, 1, 4),
+(5, 1, 5),
+(6, 1, 6),
+(7, 2, 4),
+(8, 2, 5),
+(9, 1, 7),
+(10, 1, 8),
+(11, 1, 9),
+(12, 1, 10),
+(13, 2, 8),
+(14, 2, 9),
+(15, 3, 4),
+(16, 3, 5),
+(17, 3, 6),
+(18, 3, 10);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kunjungan`
+-- Struktur dari tabel `kunjungan`
 --
 
 CREATE TABLE `kunjungan` (
@@ -91,10 +116,17 @@ CREATE TABLE `kunjungan` (
   `tglkunjungan` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
+--
+-- Dumping data untuk tabel `kunjungan`
+--
+
+INSERT INTO `kunjungan` (`id`, `pendaftaranpasienid`, `jeniskunjungan`, `tglkunjungan`) VALUES
+(2, 2, 'baru', '2025-11-19 21:29:00');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `log_login`
+-- Struktur dari tabel `log_login`
 --
 
 CREATE TABLE `log_login` (
@@ -105,16 +137,18 @@ CREATE TABLE `log_login` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `log_login`
+-- Dumping data untuk tabel `log_login`
 --
 
 INSERT INTO `log_login` (`id`, `user_id`, `tanggal`, `ip`) VALUES
-(1, 1, '2025-11-19 10:02:20', '::1');
+(1, 1, '2025-11-19 10:02:20', '::1'),
+(2, 1, '2025-11-19 12:29:47', '::1'),
+(3, 1, '2025-11-19 16:04:54', '::1');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `menu`
+-- Struktur dari tabel `menu`
 --
 
 CREATE TABLE `menu` (
@@ -130,15 +164,15 @@ CREATE TABLE `menu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `menu`
+-- Dumping data untuk tabel `menu`
 --
 
 INSERT INTO `menu` (`id`, `role_id`, `parent_id`, `code`, `name`, `action`, `action_active`, `icon`, `isactive`) VALUES
 (1, NULL, NULL, '001', 'Home', 'home', 'home', 'fa fa-th-large', 1),
-(2, NULL, NULL, '002', 'Pasien', 'pasien', 'pasien', NULL, 1),
-(3, NULL, NULL, '003', 'Pendaftaran', 'pendaftaran', 'pendaftaran', NULL, 1),
-(4, NULL, NULL, '004', 'Kunjungan', 'kunjungan', 'kunjungan', NULL, 1),
-(5, NULL, NULL, '005', 'Asesmen', 'asesmen', 'asesmen', NULL, 1),
+(2, 3, NULL, '002', 'Pasien', 'pasien', 'pasien', NULL, 1),
+(3, 4, NULL, '003', 'Pendaftaran', 'pendaftaran', 'pendaftaran', NULL, 1),
+(4, 5, NULL, '004', 'Kunjungan', 'kunjungan', 'kunjungan', NULL, 1),
+(5, 6, NULL, '005', 'Asesmen', 'asesmen', 'asesmen', NULL, 1),
 (6, NULL, NULL, '006', 'Sistem', NULL, NULL, 'fa fa-cogs', 1),
 (7, 1, 6, '006.001', 'Pengguna', 'user', 'user', 'fa fa-user-lock', 1),
 (8, 2, 6, '006.002', 'Group', 'group', 'group', 'fa fa-users-cog', 1);
@@ -146,7 +180,7 @@ INSERT INTO `menu` (`id`, `role_id`, `parent_id`, `code`, `name`, `action`, `act
 -- --------------------------------------------------------
 
 --
--- Table structure for table `migrations`
+-- Struktur dari tabel `migrations`
 --
 
 CREATE TABLE `migrations` (
@@ -160,7 +194,7 @@ CREATE TABLE `migrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `migrations`
+-- Dumping data untuk tabel `migrations`
 --
 
 INSERT INTO `migrations` (`id`, `version`, `class`, `group`, `namespace`, `time`, `batch`) VALUES
@@ -169,7 +203,7 @@ INSERT INTO `migrations` (`id`, `version`, `class`, `group`, `namespace`, `time`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pasien`
+-- Struktur dari tabel `pasien`
 --
 
 CREATE TABLE `pasien` (
@@ -179,10 +213,26 @@ CREATE TABLE `pasien` (
   `alamat` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
+--
+-- Dumping data untuk tabel `pasien`
+--
+
+INSERT INTO `pasien` (`id`, `nama`, `norm`, `alamat`) VALUES
+(5, 'Leanne Graham', '1', 'Kulas Light Apt. 556 Gwenborough 92998-3874'),
+(6, 'Ervin Howell', '2', 'Victor Plains Suite 879 Wisokyburgh 90566-7771'),
+(7, 'Clementine Bauch', '3', 'Douglas Extension Suite 847 McKenziehaven 59590-4157'),
+(8, 'Patricia Lebsack', '4', 'Hoeger Mall Apt. 692 South Elvis 53919-4257'),
+(9, 'Chelsey Dietrich', '5', 'Skiles Walks Suite 351 Roscoeview 33263'),
+(10, 'Mrs. Dennis Schulist', '6', 'Norberto Crossing Apt. 950 South Christy 23505-1337'),
+(11, 'Kurtis Weissnat', '7', 'Rex Trail Suite 280 Howemouth 58804-1099'),
+(12, 'Nicholas Runolfsdottir V', '8', 'Ellsworth Summit Suite 729 Aliyaview 45169'),
+(13, 'Glenna Reichert', '9', 'Dayna Park Suite 449 Bartholomebury 76495-3109'),
+(14, 'Clementina DuBuque', '10', 'Kattie Turnpike Suite 198 Lebsackbury 31428-2261');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pendaftaran`
+-- Struktur dari tabel `pendaftaran`
 --
 
 CREATE TABLE `pendaftaran` (
@@ -192,10 +242,17 @@ CREATE TABLE `pendaftaran` (
   `tglregistrasi` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
+--
+-- Dumping data untuk tabel `pendaftaran`
+--
+
+INSERT INTO `pendaftaran` (`id`, `pasienid`, `noregistrasi`, `tglregistrasi`) VALUES
+(2, 5, 'ww', '2025-11-19 21:17:00');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `role`
+-- Struktur dari tabel `role`
 --
 
 CREATE TABLE `role` (
@@ -207,17 +264,25 @@ CREATE TABLE `role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `role`
+-- Dumping data untuk tabel `role`
 --
 
 INSERT INTO `role` (`id`, `parent_id`, `code`, `name`, `order`) VALUES
-(1, NULL, 'user', 'Pengguna', '001'),
-(2, NULL, 'group', 'Group', '002');
+(1, NULL, 'user', 'Pengguna', '009'),
+(2, NULL, 'group', 'Group', '010'),
+(3, NULL, 'pasien', 'Pasien', '001'),
+(4, NULL, 'pendaftaran', 'Pendaftaran', '003'),
+(5, NULL, 'kunjungan', 'Kunjungan', '005'),
+(6, NULL, 'asesmen', 'Asesmen', '007'),
+(7, 3, 'crud_pasien', 'CRUD', '002'),
+(8, 4, 'crud_pendaftaran', 'CRUD', '004'),
+(9, 5, 'crud_kunjungan', 'CRUD', '006'),
+(10, 6, 'crud_asesmen', 'CRUD', '008');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Struktur dari tabel `user`
 --
 
 CREATE TABLE `user` (
@@ -235,16 +300,18 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `user`
+-- Dumping data untuk tabel `user`
 --
 
 INSERT INTO `user` (`id`, `username`, `password`, `name`, `email`, `isactive`, `last_login`, `created_by`, `created_at`, `updated_by`, `updated_at`) VALUES
-(1, 'admin', '$2y$12$UbjZrXswyg9aJeY5vQI.fOcJspi/yIa6HtyeDvR5m0AykEW76LWci', 'Administrator', NULL, 1, '2025-11-19 17:02:20', NULL, NULL, NULL, NULL);
+(1, 'admin', '$2y$12$UbjZrXswyg9aJeY5vQI.fOcJspi/yIa6HtyeDvR5m0AykEW76LWci', 'Administrator', '', 1, '2025-11-19 23:04:54', NULL, NULL, NULL, NULL),
+(2, 'admisi', '$2y$10$ZYCGDUSBj32kshXi9O0/lOKl2Nrq2QeihepWfQt1aZa4eVHMnUTjm', 'Admisi', '', 1, NULL, 1, '2025-11-19 23:04:25', NULL, '2025-11-19 23:04:25'),
+(3, 'perawat', '$2y$10$qBzbq29IAn7P9L3plhlK1.TzMTxI/TEO.gc0kV0ine3htjYkUZBWe', 'Perawat', '', 1, NULL, 1, '2025-11-19 23:04:44', NULL, '2025-11-19 23:04:44');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_group`
+-- Struktur dari tabel `user_group`
 --
 
 CREATE TABLE `user_group` (
@@ -254,31 +321,35 @@ CREATE TABLE `user_group` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `user_group`
+-- Dumping data untuk tabel `user_group`
 --
 
 INSERT INTO `user_group` (`id`, `user_id`, `group_id`) VALUES
-(1, 1, 1);
+(1, 1, 1),
+(2, 2, 2),
+(3, 3, 3),
+(4, 1, 2),
+(5, 1, 3);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `asesmen`
+-- Indeks untuk tabel `asesmen`
 --
 ALTER TABLE `asesmen`
   ADD PRIMARY KEY (`id`),
   ADD KEY `kunjunganid` (`kunjunganid`);
 
 --
--- Indexes for table `group`
+-- Indeks untuk tabel `group`
 --
 ALTER TABLE `group`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `group_role`
+-- Indeks untuk tabel `group_role`
 --
 ALTER TABLE `group_role`
   ADD PRIMARY KEY (`id`),
@@ -286,21 +357,21 @@ ALTER TABLE `group_role`
   ADD KEY `group_role_role_id_foreign` (`role_id`);
 
 --
--- Indexes for table `kunjungan`
+-- Indeks untuk tabel `kunjungan`
 --
 ALTER TABLE `kunjungan`
   ADD PRIMARY KEY (`id`),
   ADD KEY `pendaftaranpasienid` (`pendaftaranpasienid`);
 
 --
--- Indexes for table `log_login`
+-- Indeks untuk tabel `log_login`
 --
 ALTER TABLE `log_login`
   ADD PRIMARY KEY (`id`),
   ADD KEY `log_login_user_id_foreign` (`user_id`);
 
 --
--- Indexes for table `menu`
+-- Indeks untuk tabel `menu`
 --
 ALTER TABLE `menu`
   ADD PRIMARY KEY (`id`),
@@ -309,26 +380,26 @@ ALTER TABLE `menu`
   ADD KEY `menu_parent_id_foreign` (`parent_id`);
 
 --
--- Indexes for table `migrations`
+-- Indeks untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `pasien`
+-- Indeks untuk tabel `pasien`
 --
 ALTER TABLE `pasien`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `pendaftaran`
+-- Indeks untuk tabel `pendaftaran`
 --
 ALTER TABLE `pendaftaran`
   ADD PRIMARY KEY (`id`),
   ADD KEY `pasienid` (`pasienid`);
 
 --
--- Indexes for table `role`
+-- Indeks untuk tabel `role`
 --
 ALTER TABLE `role`
   ADD PRIMARY KEY (`id`),
@@ -336,14 +407,14 @@ ALTER TABLE `role`
   ADD KEY `role_parent_id_foreign` (`parent_id`);
 
 --
--- Indexes for table `user`
+-- Indeks untuk tabel `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `username` (`username`);
 
 --
--- Indexes for table `user_group`
+-- Indeks untuk tabel `user_group`
 --
 ALTER TABLE `user_group`
   ADD PRIMARY KEY (`id`),
@@ -351,131 +422,131 @@ ALTER TABLE `user_group`
   ADD KEY `user_group_group_id_foreign` (`group_id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `asesmen`
+-- AUTO_INCREMENT untuk tabel `asesmen`
 --
 ALTER TABLE `asesmen`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `group`
---
-ALTER TABLE `group`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `group_role`
---
-ALTER TABLE `group_role`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `kunjungan`
+-- AUTO_INCREMENT untuk tabel `group`
+--
+ALTER TABLE `group`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT untuk tabel `group_role`
+--
+ALTER TABLE `group_role`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT untuk tabel `kunjungan`
 --
 ALTER TABLE `kunjungan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `log_login`
+-- AUTO_INCREMENT untuk tabel `log_login`
 --
 ALTER TABLE `log_login`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `menu`
+-- AUTO_INCREMENT untuk tabel `menu`
 --
 ALTER TABLE `menu`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `migrations`
+-- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `pasien`
+-- AUTO_INCREMENT untuk tabel `pasien`
 --
 ALTER TABLE `pasien`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT for table `pendaftaran`
+-- AUTO_INCREMENT untuk tabel `pendaftaran`
 --
 ALTER TABLE `pendaftaran`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `role`
+-- AUTO_INCREMENT untuk tabel `role`
 --
 ALTER TABLE `role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `user_group`
+-- AUTO_INCREMENT untuk tabel `user_group`
 --
 ALTER TABLE `user_group`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- Constraints for dumped tables
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
--- Constraints for table `asesmen`
+-- Ketidakleluasaan untuk tabel `asesmen`
 --
 ALTER TABLE `asesmen`
   ADD CONSTRAINT `asesmen_ibfk_1` FOREIGN KEY (`kunjunganid`) REFERENCES `kunjungan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `group_role`
+-- Ketidakleluasaan untuk tabel `group_role`
 --
 ALTER TABLE `group_role`
   ADD CONSTRAINT `group_role_group_id_foreign` FOREIGN KEY (`group_id`) REFERENCES `group` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `group_role_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `kunjungan`
+-- Ketidakleluasaan untuk tabel `kunjungan`
 --
 ALTER TABLE `kunjungan`
   ADD CONSTRAINT `kunjungan_ibfk_1` FOREIGN KEY (`pendaftaranpasienid`) REFERENCES `pendaftaran` (`id`);
 
 --
--- Constraints for table `log_login`
+-- Ketidakleluasaan untuk tabel `log_login`
 --
 ALTER TABLE `log_login`
   ADD CONSTRAINT `log_login_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `menu`
+-- Ketidakleluasaan untuk tabel `menu`
 --
 ALTER TABLE `menu`
   ADD CONSTRAINT `menu_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `menu` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `menu_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`);
 
 --
--- Constraints for table `pendaftaran`
+-- Ketidakleluasaan untuk tabel `pendaftaran`
 --
 ALTER TABLE `pendaftaran`
   ADD CONSTRAINT `pendaftaran_ibfk_1` FOREIGN KEY (`pasienid`) REFERENCES `pasien` (`id`);
 
 --
--- Constraints for table `role`
+-- Ketidakleluasaan untuk tabel `role`
 --
 ALTER TABLE `role`
   ADD CONSTRAINT `role_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `user_group`
+-- Ketidakleluasaan untuk tabel `user_group`
 --
 ALTER TABLE `user_group`
   ADD CONSTRAINT `user_group_group_id_foreign` FOREIGN KEY (`group_id`) REFERENCES `group` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,

@@ -22,7 +22,9 @@ Kunjungan
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <a href="#!" class="btn btn-primary btn-xs" onclick="_Kunjungan.getDataAdd()">Tambah Baru</a>
+              <?php if(in_array('crud_kunjungan', session()->get('roles'))): ?>
+                <a href="#!" class="btn btn-primary btn-xs" onclick="_Kunjungan.getDataAdd()">Tambah Baru</a>
+              <?php endif; ?>
             </div>
             <div class="card-body">
               <div class="table-responsive p-0">
@@ -53,8 +55,10 @@ Kunjungan
                         <td><?= $template->getLabelByValue($jeniskunjunganOpts,$kunjungan->jeniskunjungan ?: '') ?></td>
                         <td><?= $template->formatDate($kunjungan->tglkunjungan,'d-m-Y H:i') ?></td>
                         <td>
-                          <a href="#!" class="btn btn-success btn-xs" onclick="_Kunjungan.getDataSave('<?= $kunjungan->id ?>')"><i class="fa fa-edit" data-toggle="tooltip" data-original-title="Ubah"></i></a>
-                          <a href="#!" class="btn btn-danger btn-xs" onclick="_Kunjungan.del('<?= $kunjungan->id ?>')"><i class="fa fa-trash" data-toggle="tooltip" title="Hapus"></i></a>
+                          <?php if(in_array('crud_kunjungan', session()->get('roles'))): ?>
+                            <a href="#!" class="btn btn-success btn-xs" onclick="_Kunjungan.getDataSave('<?= $kunjungan->id ?>')"><i class="fa fa-edit" data-toggle="tooltip" data-original-title="Ubah"></i></a>
+                            <a href="#!" class="btn btn-danger btn-xs" onclick="_Kunjungan.del('<?= $kunjungan->id ?>')"><i class="fa fa-trash" data-toggle="tooltip" title="Hapus"></i></a>
+                          <?php endif; ?>
                           <a href="#!" class="btn btn-warning btn-xs" onclick="_Kunjungan.detailModal('<?= $kunjungan->id ?>')"><i class="fa fa-info-circle" data-toggle="tooltip" title="Detail"></i></a>
                         </td>
                       </tr>

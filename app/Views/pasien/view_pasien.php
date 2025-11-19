@@ -22,8 +22,10 @@ Pasien
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <a href="#!" class="btn btn-primary" onclick="_Pasien.getDataAdd()">Tambah Baru</a>
-              <a class="btn btn-primary" href="#!"  data-toggle="modal" data-target="#modal_import_json">Import JSON</a>
+              <?php if(in_array('crud_pasien', session()->get('roles'))): ?>
+                <a href="#!" class="btn btn-primary" onclick="_Pasien.getDataAdd()">Tambah Baru</a>
+                <a class="btn btn-primary" href="#!"  data-toggle="modal" data-target="#modal_import_json">Import JSON</a>
+              <?php endif; ?>
             </div>
             <div class="card-body">
               <div class="table-responsive p-0">
@@ -48,8 +50,10 @@ Pasien
                         <td><?= $pasien->norm ?></td>
                         <td><?= nl2br($pasien->alamat) ?></td>
                         <td>
-                          <a href="#!" class="btn btn-success btn-xs" onclick="_Pasien.getDataSave('<?= $pasien->id ?>')"><i class="fa fa-edit" data-toggle="tooltip" data-original-title="Ubah"></i></a>
-                          <a href="#!" class="btn btn-danger btn-xs" onclick="_Pasien.del('<?= $pasien->id ?>')"><i class="fa fa-trash" data-toggle="tooltip" title="Hapus"></i></a>
+                          <?php if(in_array('crud_pasien', session()->get('roles'))): ?>
+                            <a href="#!" class="btn btn-success btn-xs" onclick="_Pasien.getDataSave('<?= $pasien->id ?>')"><i class="fa fa-edit" data-toggle="tooltip" data-original-title="Ubah"></i></a>
+                            <a href="#!" class="btn btn-danger btn-xs" onclick="_Pasien.del('<?= $pasien->id ?>')"><i class="fa fa-trash" data-toggle="tooltip" title="Hapus"></i></a>
+                          <?php endif; ?>
                           <a href="#!" class="btn btn-warning btn-xs" onclick="_Pasien.detailModal('<?= $pasien->id ?>')"><i class="fa fa-info-circle" data-toggle="tooltip" title="Detail"></i></a>
                         </td>
                       </tr>

@@ -22,7 +22,9 @@ Pendaftaran
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <a href="#!" class="btn btn-primary btn-xs" onclick="_Pendaftaran.getDataAdd()">Tambah Baru</a>
+              <?php if(in_array('crud_pendaftaran', session()->get('roles'))): ?>
+                <a href="#!" class="btn btn-primary btn-xs" onclick="_Pendaftaran.getDataAdd()">Tambah Baru</a>
+              <?php endif; ?>
             </div>
             <div class="card-body">
               <div class="table-responsive p-0">
@@ -49,8 +51,10 @@ Pendaftaran
                         <td><?= $pendaftaran->noregistrasi ?></td>
                         <td><?= $template->formatDate($pendaftaran->tglregistrasi,'d-m-Y H:i') ?></td>
                         <td>
-                          <a href="#!" class="btn btn-success btn-xs" onclick="_Pendaftaran.getDataSave('<?= $pendaftaran->id ?>')"><i class="fa fa-edit" data-toggle="tooltip" data-original-title="Ubah"></i></a>
-                          <a href="#!" class="btn btn-danger btn-xs" onclick="_Pendaftaran.del('<?= $pendaftaran->id ?>')"><i class="fa fa-trash" data-toggle="tooltip" title="Hapus"></i></a>
+                          <?php if(in_array('crud_pendaftaran', session()->get('roles'))): ?>
+                            <a href="#!" class="btn btn-success btn-xs" onclick="_Pendaftaran.getDataSave('<?= $pendaftaran->id ?>')"><i class="fa fa-edit" data-toggle="tooltip" data-original-title="Ubah"></i></a>
+                            <a href="#!" class="btn btn-danger btn-xs" onclick="_Pendaftaran.del('<?= $pendaftaran->id ?>')"><i class="fa fa-trash" data-toggle="tooltip" title="Hapus"></i></a>
+                          <?php endif; ?>
                           <a href="#!" class="btn btn-warning btn-xs" onclick="_Pendaftaran.detailModal('<?= $pendaftaran->id ?>')"><i class="fa fa-info-circle" data-toggle="tooltip" title="Detail"></i></a>
                         </td>
                       </tr>

@@ -22,7 +22,9 @@ Asesmen
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <a href="#!" class="btn btn-primary btn-xs" onclick="_Asesmen.getDataAdd()">Tambah Baru</a>
+              <?php if(in_array('crud_asesmen', session()->get('roles'))): ?>
+                <a href="#!" class="btn btn-primary btn-xs" onclick="_Asesmen.getDataAdd()">Tambah Baru</a>
+              <?php endif; ?>
             </div>
             <div class="card-body">
               <div class="table-responsive p-0">
@@ -53,8 +55,10 @@ Asesmen
                         <td><?= nl2br($asesmen->keluhan_utama) ?></td>
                         <td><?= nl2br($asesmen->keluhan_tambahan) ?></td>
                         <td>
-                          <a href="#!" class="btn btn-success btn-xs" onclick="_Asesmen.getDataSave('<?= $asesmen->id ?>')"><i class="fa fa-edit" data-toggle="tooltip" data-original-title="Ubah"></i></a>
-                          <a href="#!" class="btn btn-danger btn-xs" onclick="_Asesmen.del('<?= $asesmen->id ?>')"><i class="fa fa-trash" data-toggle="tooltip" title="Hapus"></i></a>
+                          <?php if(in_array('crud_asesmen', session()->get('roles'))): ?>
+                            <a href="#!" class="btn btn-success btn-xs" onclick="_Asesmen.getDataSave('<?= $asesmen->id ?>')"><i class="fa fa-edit" data-toggle="tooltip" data-original-title="Ubah"></i></a>
+                            <a href="#!" class="btn btn-danger btn-xs" onclick="_Asesmen.del('<?= $asesmen->id ?>')"><i class="fa fa-trash" data-toggle="tooltip" title="Hapus"></i></a>
+                            <?php endif; ?>
                           <a href="#!" class="btn btn-warning btn-xs" onclick="_Asesmen.detailModal('<?= $asesmen->id ?>')"><i class="fa fa-info-circle" data-toggle="tooltip" title="Detail"></i></a>
                         </td>
                       </tr>

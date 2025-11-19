@@ -45,33 +45,41 @@ $routes->group('/', ['filter' => 'auth'], static function ($routes) {
     $routes->get('(:segment)/detailModal', 'Group::detailModal/$1');
   });
   
-  $routes->group('pasien', [], function ($routes) {
+  $routes->group('pasien', ['filter' => 'privilege:pasien'], function ($routes) {
     $routes->get('', 'Pasien::index');
-    $routes->get('(:segment)/get', 'Pasien::getData/$1');
-    $routes->post('save', 'Pasien::save');
-    $routes->post('(:segment)/delete', 'Pasien::delete/$1');
     $routes->get('(:segment)/detailModal', 'Pasien::detailModal/$1');
-    $routes->post('importJson', 'Pasien::importJson');
+    $routes->group('', ['filter' => 'privilege:crud_pasien'], function ($routes) {
+      $routes->get('(:segment)/get', 'Pasien::getData/$1');
+      $routes->post('save', 'Pasien::save');
+      $routes->post('(:segment)/delete', 'Pasien::delete/$1');
+      $routes->post('importJson', 'Pasien::importJson');
+    });
   });
-  $routes->group('pendaftaran', [], function ($routes) {
+  $routes->group('pendaftaran', ['filter' => 'privilege:pendaftaran'], function ($routes) {
     $routes->get('', 'Pendaftaran::index');
-    $routes->get('(:segment)/get', 'Pendaftaran::getData/$1');
-    $routes->post('save', 'Pendaftaran::save');
-    $routes->post('(:segment)/delete', 'Pendaftaran::delete/$1');
     $routes->get('(:segment)/detailModal', 'Pendaftaran::detailModal/$1');
+    $routes->group('', ['filter' => 'privilege:crud_pendaftaran'], function ($routes) {
+      $routes->get('(:segment)/get', 'Pendaftaran::getData/$1');
+      $routes->post('save', 'Pendaftaran::save');
+      $routes->post('(:segment)/delete', 'Pendaftaran::delete/$1');
+    });
   });
-  $routes->group('kunjungan', [], function ($routes) {
+  $routes->group('kunjungan', ['filter' => 'privilege:kunjungan'], function ($routes) {
     $routes->get('', 'Kunjungan::index');
-    $routes->get('(:segment)/get', 'Kunjungan::getData/$1');
-    $routes->post('save', 'Kunjungan::save');
-    $routes->post('(:segment)/delete', 'Kunjungan::delete/$1');
     $routes->get('(:segment)/detailModal', 'Kunjungan::detailModal/$1');
+    $routes->group('', ['filter' => 'privilege:crud_kunjungan'], function ($routes) {
+      $routes->get('(:segment)/get', 'Kunjungan::getData/$1');
+      $routes->post('save', 'Kunjungan::save');
+      $routes->post('(:segment)/delete', 'Kunjungan::delete/$1');
+    });
   });
-  $routes->group('asesmen', [], function ($routes) {
+  $routes->group('asesmen', ['filter' => 'privilege:asesmen'], function ($routes) {
     $routes->get('', 'Asesmen::index');
-    $routes->get('(:segment)/get', 'Asesmen::getData/$1');
-    $routes->post('save', 'Asesmen::save');
-    $routes->post('(:segment)/delete', 'Asesmen::delete/$1');
     $routes->get('(:segment)/detailModal', 'Asesmen::detailModal/$1');
+    $routes->group('', ['filter' => 'privilege:crud_asesmen'], function ($routes) {
+      $routes->get('(:segment)/get', 'Asesmen::getData/$1');
+      $routes->post('save', 'Asesmen::save');
+      $routes->post('(:segment)/delete', 'Asesmen::delete/$1');
+    });
   });
 });
